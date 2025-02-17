@@ -40,10 +40,10 @@ create table degrees (
 create table register (
     regtime date,
     grade int,
-    ssn int,
+    snum int,
     number int,
-    primary key (ssn, number),
-    foreign key (ssn) references students (ssn),
+    -- primary key (snum, number),
+    foreign key (snum) references students (snum),
     foreign key (number) references courses (number)
 );
 
