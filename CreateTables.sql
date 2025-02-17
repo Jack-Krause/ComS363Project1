@@ -36,3 +36,29 @@ create table degrees (
     primary key (name)
 );
 
+-- relationships
+create table register (
+    regtime date,
+    grade int,
+    ssn int,
+    number int,
+    primary key (ssn, number),
+    foreign key (ssn) references students (ssn),
+    foreign key (number) references courses (number)
+);
+
+-- create table offers (
+
+-- );
+
+-- create table administers (
+
+-- );
+
+-- create table minor (
+
+-- );
+
+-- create table major (
+
+-- );
