@@ -1,4 +1,5 @@
 create database University;
+use university;
 
 drop table if exists register;
 drop table if exists offers;
@@ -20,9 +21,9 @@ create table department (
 );
 
 create table students (
-    p_phone int,
+    p_phone bigint,
     p_addr varchar(50),
-    c_phone int,
+    c_phone bigint,
     c_addr varchar(50),
     dob date,
     gender char(1),
@@ -70,7 +71,7 @@ create table administer (
     code int not null,
     name varchar(50) not null,
     foreign key (code) references department (code),
-    foreign key (name) references degrees
+    foreign key (name) references degrees (name)
 );
 
 create table minor (

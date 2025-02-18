@@ -1,37 +1,49 @@
 create database University;
+use university;
+
+drop table if exists register;
+drop table if exists offers;
+drop table if exists administer;
+drop table if exists minor;
+drop table if exists major;
+drop table if exists courses;
+drop table if exists degrees;
+drop table if exists students;
+drop table if exists department;
+
+create table department (
+    name varchar(10) not null,
+    code int not null,
+    phone int,
+    college varchar(20),
+    primary key (code),
+    unique (name)
+);
 
 create table students (
-    p_phone int,
+    p_phone bigint,
     p_addr varchar(50),
-    c_phone int,
+    c_phone bigint,
     c_addr varchar(50),
     dob date,
     gender char(1),
     name varchar(20),
-    snum int,
+    snum int not null,
     ssn int,
     primary key (snum)
 );
 
 create table courses (
     name varchar(20),
-    number int,
+    number int not null,
     description varchar(50),
     credit_hours int,
     level int,
     primary key (number)
 );
 
-create table departments (
-    name varchar(50),
-    code int,
-    phone int,
-    college varchar(20),
-    primary key (code)
-);
-
 create table degrees (
-    name varchar(50),
+    name varchar(50) not null,
     level int,
     primary key (name)
 );
@@ -40,102 +52,94 @@ create table degrees (
 create table register (
     regtime date,
     grade int,
-    snum int,
-    number int,
-    -- primary key (snum, number),
+    snum int not null,
+    number int not null,
+    primary key (snum, number),
     foreign key (snum) references students (snum),
     foreign key (number) references courses (number)
 );
 
 create table offers (
-    number int,
-    code int,
+    number int not null,
+    code int not null,
+    primary key (number),
     foreign key (number) references courses (number),
-    foreign key (code) references departments (code)
+    foreign key (code) references department (code)
 );
 
 create table administer (
-    code int,
-    name varchar(50),
-    foreign key (code) references departments (code),
+    code int not null,
+    name varchar(50) not null,
+    foreign key (code) references department (code),
     foreign key (name) references degrees (name)
 );
 
 create table minor (
-    snum int,
-    name varchar(50),
+    snum int not null,
+    name varchar(50) not null,
     foreign key (snum) references students (snum),
     foreign key (name) references degrees (name)
 );
 
--- create table major (
+create table major (
+    snum int not null,
+    name varchar(50) not null,
+    foreign key (snum) references students (snum),
+    foreign key (name) references degrees (name)
+);
+-- insert sample departments
+insert into department (name, code, phone, college)
+values ('science', 101, 1234567890, 'engineering'),
+       ('arts', 102, 987654321, 'humanities');
 
--- );
+-- insert sample students
+insert into students (p_phone, p_addr, c_phone, c_addr, dob, gender, name, snum, ssn)
+values (1112223333, '123 main st', 4445556666, '456 campus rd', '2000-01-01', 'm', 'john', 1, 111223333),
+       (2223334444, '789 elm st', 5556667777, '101 college ave', '2001-02-02', 'f', 'alice', 2, 222334444);
 
+-- insert sample courses
+insert into courses (name, number, description, credit_hours, level)
+values ('calc', 101, 'calculus course', 3, 100),
+       ('lit', 102, 'literature course', 3, 200);
 
-insert into Students (p_phone, p_addr, c_phone, c_addr, dob, gender, name, snum, ssn)
-values
-(0000000001, '1 street', 1111111119, '1 ave', '2000-01-01', 'F', 'Person One', 111111110, 199999999),
-(0000000002, '1 street', 1111111118, '2 ave', '2000-01-02', 'M', 'Person Two', 111111111, 299999999),
-(0000000003, '1 street', 1111111117, '3 ave', '2000-01-03', 'F', 'Person Three', 111111112, 399999999),
-(0000000004, '1 street', 1111111116, '4 ave', '2000-01-04', 'M', 'Person Four', 111111113, 499999999),
-(0000000005, '1 street', 1111111115, '5 ave', '2000-01-05', 'F', 'Person Five', 111111114, 599999999);
-
-
-insert into courses (name, number, description , credit_hours, level)
-values
-('Calc I', 165, 'Math class', 3, 100),
-('Calc II', 166, 'Math class', 3, 100),
-('Engl I', 201, 'Math class', 3, 200),
-('Engl II', 301, 'Math class', 3, 300);
-
-insert into register (snum, number)
-values
-(111111110, 165),
-(111111110, 166),
-(111111110, 201),
-(111111110, 301),
-(111111113, 165),
-(111111113, 166),
-(111111113, 201),
-(111111113, 301);
-
-insert into departments (name, code)
-values
-("Computer Science", 20),
-("Philosophy", 30),
-("Design", 40);
-
-insert into offers (number, code)
-values
-(165, 20),
-(166, 20),
-(301, 30);
-
+-- insert sample degrees
 insert into degrees (name, level)
-values
-("Computer Science BS", 400),
-("Computer Science MS", 500),
-("Philosophy BA", 400);
+values ('bscs', 1),
+       ('baeng', 2);
 
+-- insert registrations (relationship 1)
+insert into register (regtime, grade, snum, number)
+values ('2025-01-10', 85, 1, 101),
+       ('2025-01-15', 90, 2, 102);
+
+-- insert course offerings (relationship 2)
+insert into offers (number, code)
+values (101, 101),
+       (102, 102);
+
+-- insert degree administration (relationship 3)
 insert into administer (code, name)
-values
-(20, "Computer Science BS"),
-(20, "Computer Science MS"),
-(30, "Philosophy BA");
+values (101, 'bscs'),
+       (102, 'baeng');
 
+-- insert minor records (relationship 4)
 insert into minor (snum, name)
-values
-(111111112, "Computer Science BS");
+values (2, 'bscs');
 
+-- insert major records (relationship 5)
+insert into major (snum, name)
+values (1, 'bscs'),
+       (2, 'baeng');
 
-
+--------------------------------------------------
+-- quick queries to test the data
+--------------------------------------------------
+select * from department;
 select * from students;
 select * from courses;
 select * from degrees;
-select snum, number from register;
-select * from departments;
+select * from register;
 select * from offers;
 select * from administer;
 select * from minor;
-
+select * from major;
