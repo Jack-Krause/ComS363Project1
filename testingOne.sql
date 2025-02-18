@@ -47,6 +47,29 @@ create table register (
     foreign key (number) references courses (number)
 );
 
+create table offers (
+    number int,
+    code int,
+    foreign key (number) references courses (number),
+    foreign key (code) references departments (code)
+);
+
+create table administer (
+    code int,
+    name varchar(50),
+    foreign key (code) references departments (code),
+    foreign key (name) references degrees (name)
+);
+
+-- create table minor (
+
+-- );
+
+-- create table major (
+
+-- );
+
+
 insert into Students (p_phone, p_addr, c_phone, c_addr, dob, gender, name, snum, ssn)
 values
 (0000000001, '1 street', 1111111119, '1 ave', '2000-01-01', 'F', 'Person One', 111111110, 199999999),
@@ -74,23 +97,34 @@ values
 (111111113, 201),
 (111111113, 301);
 
+insert into departments (name, code)
+values
+("Computer Science", 20),
+("Philosophy", 30),
+("Design", 40);
+
+insert into offers (number, code)
+values
+(165, 20),
+(166, 20),
+(301, 30);
+
+insert into degrees (name, level)
+values
+("Computer Science BS", 400),
+("Computer Science MS", 500),
+("Philosophy BA", 400);
+
+insert into administer (code, name)
+values
+(20, "Computer Science BS"),
+(20, "Computer Science MS"),
+(30, "Philosophy BA");
 
 
 select * from students;
 select * from courses;
-select * from register;
--- create table offers (
-
--- );
-
--- create table administers (
-
--- );
-
--- create table minor (
-
--- );
-
--- create table major (
-
--- );
+select snum, number from register;
+select * from departments;
+select * from offers;
+select * from administer;

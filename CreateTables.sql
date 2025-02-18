@@ -47,13 +47,19 @@ create table register (
     foreign key (number) references courses (number)
 );
 
--- create table offers (
+create table offers (
+    number int,
+    code int,
+    foreign key (number) references courses (number),
+    foreign key (code) references departments (code)
+);
 
--- );
-
--- create table administers (
-
--- );
+create table administer (
+    code int,
+    name varchar(50),
+    foreign key (code) references department (code),
+    foreign key (name) references degrees
+);
 
 -- create table minor (
 
