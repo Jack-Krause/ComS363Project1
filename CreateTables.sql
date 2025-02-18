@@ -61,10 +61,16 @@ create table administer (
     foreign key (name) references degrees
 );
 
--- create table minor (
+create table minor (
+    snum int,
+    name varchar(50),
+    foreign key (snum) references students (snum),
+    foreign key (name) references degrees (name)
+);
 
--- );
-
--- create table major (
-
--- );
+create table major (
+    snum int,
+    name varchar(50),
+    foreign key (snum) references students (snum),
+    foreign key (name) references degrees (name)
+);

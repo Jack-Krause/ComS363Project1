@@ -61,9 +61,12 @@ create table administer (
     foreign key (name) references degrees (name)
 );
 
--- create table minor (
-
--- );
+create table minor (
+    snum int,
+    name varchar(50),
+    foreign key (snum) references students (snum),
+    foreign key (name) references degrees (name)
+);
 
 -- create table major (
 
@@ -121,10 +124,18 @@ values
 (20, "Computer Science MS"),
 (30, "Philosophy BA");
 
+insert into minor (snum, name)
+values
+(111111112, "Computer Science BS");
+
+
 
 select * from students;
 select * from courses;
+select * from degrees;
 select snum, number from register;
 select * from departments;
 select * from offers;
 select * from administer;
+select * from minor;
+
