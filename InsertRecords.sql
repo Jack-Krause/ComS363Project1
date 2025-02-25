@@ -26,8 +26,52 @@ fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n'
 ignore 1 rows
-(cname, cnumber, description, credithours, level, department_code);
+(cnumber, cname, description, credithours, level, department_code);
+
+
+load data local infile 'C:\\Users\\jackm\\OneDrive\\CS3630\\Project1\\degrees.csv'
+into table degrees
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\r\n'
+ignore 1 rows
+(dgname, level, department_code);
+
+
+load data local infile 'C:\\Users\\jackm\\OneDrive\\CS3630\\Project1\\major.csv'
+into table major
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\r\n'
+ignore 1 rows
+(sid, name, level);
+
+
+load data local infile 'C:\\Users\\jackm\\OneDrive\\CS3630\\Project1\\minor.csv'
+into table minor
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\r\n'
+ignore 1 rows
+(sid, name, level);
+
+
+load data local infile 'C:\\Users\\jackm\\OneDrive\\CS3630\\Project1\\register.csv'
+into table register
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\r\n'
+ignore 1 rows
+(sid, course_number, regtime, grade);
+
 
 select * from departments;
 select * from students;
 select * from courses;
+select * from major;
+select * from minor;
+select * from register;
+select count(*) from courses;
+
+
+
