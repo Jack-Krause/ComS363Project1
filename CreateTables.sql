@@ -154,3 +154,4 @@ select * from offers;
 select * from administer;
 select * from minor;
 select * from major;
+select * from students;
