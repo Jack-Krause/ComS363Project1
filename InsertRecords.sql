@@ -19,5 +19,14 @@ lines terminated by '\r\n'
 ignore 1 rows
 (dcode, dname, phone, college);
 
+
+load data local infile 'C:\\Users\\jackm\\OneDrive\\CS3630\\Project1\\courses.csv'
+into table courses
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\r\n'
+ignore 1 rows
+(cname, cnumber, description, credithours, level, department_code);
+
 select * from departments;
 select * from students;
