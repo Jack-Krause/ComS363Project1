@@ -30,3 +30,4 @@ ignore 1 rows
 
 select * from departments;
 select * from students;
+select * from courses;
