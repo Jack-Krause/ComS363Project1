@@ -29,6 +29,24 @@ join offers o on o.dcode = deg.department_code
 join departments dpt on o.dcode = dpt.dcode
 where dpt.dname = 'Computer Science';
 
+-- query 6
+select s.sid, s.name
+from students s
+join minor m on m.sid = s.sid
+order by s.sid asc;
+
+-- query 7
+select s.name, s.sid
+from students s
+join register r on r.sid = s.sid
+join courses c on c.cnumber = r.course_number
+join major m on s.sid = m.sid
+where m.level in ('MS', 'PhD');
+
+
+
+
+
 
 
 
