@@ -65,18 +65,5 @@ ignore 1 rows
 (sid, course_number, regtime, grade);
 
 
-select * from departments;
-select * from students;
-select * from courses;
-select * from major;
-select * from minor;
-select * from register;
-select count(*) from courses;
-
-select name 
-from students s
-join register r on r.sid = s.sid
-join register r on r.course_number = c.course
-
 
 

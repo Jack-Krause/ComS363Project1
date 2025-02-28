@@ -3,7 +3,6 @@ use university;
 
 drop table if exists register;
 drop table if exists offers;
-drop table if exists administer;
 drop table if exists minor;
 drop table if exists major;
 drop table if exists courses;
@@ -70,13 +69,6 @@ create table offers (
     primary key (cnumber),
     foreign key (cnumber) references courses(cnumber),
     foreign key (dcode) references departments(dcode)
-);
-
-create table administer (
-    dcode integer not null,
-    dgname varchar(50) not null,
-    foreign key (dcode) references departments(dcode),
-    foreign key (dgname) references degrees(dgname)
 );
 
 create table minor (
