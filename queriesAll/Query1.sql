@@ -1,2 +1,2 @@
-select p_addr from students
+select c_addr from students
 where name = "Gail";
