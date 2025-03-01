@@ -1,14 +1,14 @@
 -- create database University;
-use university;
+-- use university;
 
-drop table if exists register;
-drop table if exists offers;
-drop table if exists minor;
-drop table if exists major;
-drop table if exists courses;
-drop table if exists degrees;
-drop table if exists students;
-drop table if exists departments;
+-- drop table if exists register;
+-- drop table if exists offers;
+-- drop table if exists minor;
+-- drop table if exists major;
+-- drop table if exists courses;
+-- drop table if exists degrees;
+-- drop table if exists students;
+-- drop table if exists departments;
 
 
 create table departments (
