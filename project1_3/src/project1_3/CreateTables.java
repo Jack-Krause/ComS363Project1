@@ -4,8 +4,7 @@ import java.sql.*;
 public class CreateTables {
 	private static Connection connect = null;
 
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 
 		try {
 			//Set up connection parameters
@@ -17,75 +16,49 @@ public class CreateTables {
 		} catch(Exception e) {
 
 		}
+		
+		
 		//initiate sql statement
 		Statement stmt = null;
 		try {
 			stmt = connect.createStatement();
-			//sql1 is the string of the sql code
-			String create_student = "CREATE TABLE students (\r\n" + 
-					"	snum INT,\r\n" + 
-					"	ssn INTEGER,\r\n" + 
-					"    name VARCHAR(10),\r\n" + 
-					"    gender VARCHAR(1),\r\n" + 
-					"    dob DATE, \r\n" + 
-					"    c_addr VARCHAR(20),\r\n" + 
-					"    c_phone VARCHAR(10),\r\n" + 
-					"    p_addr VARCHAR(20),\r\n" + 
-					"    p_phone VARCHAR(10),\r\n" + 
-					"    PRIMARY KEY(ssn),\r\n" + 
-					"    UNIQUE(snum)\r\n" + 
+			
+			String create_department = "CREATE TABLE departments (\r\n" + 
+					"	dname varchar(50) not null,\r\n" + 
+					"	dcode integer not null,\r\n" + 
+					"   phone varchar(10),\r\n" + 
+					"   college varchar(20),\r\n" + 
+					"   primary key (dcode), \r\n" + 
+					"   unique (dname)\r\n" + 
 					");";
+			
+			String create_student = "CREATE TABLE students (\r\n" + 
+					"	p_phone varchar(20),\r\n" + 
+					"   p_addr varchar(20),\r\n" + 
+					"	c_phone varchar(20),\r\n" + 
+					"   c_addr varchar(20),\r\n" + 
+					"	dob varchar(10),\r\n" + 
+					"   gender varchar(1),\r\n" + 
+					"	name varchar(20),\r\n" + 
+					"	sid integer not null,\r\n" + 
+					"	ssn integer not null,\r\n" + 
+					"	primary key (ssn),\r\n" + 
+					"	unique (sid),\r\n" + 
+					");";
+			
+			
 			// To update data in a database, call the executeUpdate(String SQL) method
-			stmt.executeUpdate(create_student);	
+			stmt.executeUpdate(create_department);	
+				
+//			stmt.addBatch(create_student);
+//			stmt.executeBatch();
+			
 			System.out.println("Created students table");  
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		try {
-			
-			stmt.executeBatch();
-
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		try {
-			//insert multiple records
-			stmt.addBatch("INSERT INTO students VALUE ("
-					+ "1001,65465234,'Randy','M','2000-12-01','301 E Hall','5152700988','121 Main','7083066321');");				
-			stmt.addBatch("INSERT INTO students VALUE ("
-					+ "1002,123456789,'Vicky','F','2000-12-01','301 E Hall','5152700988','121 Main','7083066321');");				
-			stmt.executeBatch();
-			System.out.println("insert records in table ...");  
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 		
-		
-		try {
-			//To execute a SELECT query, call the executeQuery(String) method with the SQL to use
-			String query_student = "select ssn, name, gender from students;";
-					
-			
-			ResultSet rs = stmt.executeQuery(query_student);
-        	System.out.println("result for query");	
-        	System.out.println("ssn|name|gender");
-	         while(rs.next()){
-	            //Display values
-
-	             System.out.println(rs.getInt("ssn")+ "|"+ rs.getString("name")+ "|"+ rs.getString("gender"));
-
-	         }
-		           
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 		
 		
 		finally {
 			try {
