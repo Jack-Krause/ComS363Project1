@@ -34,9 +34,10 @@ public class CreateTables {
 			stmt.addBatch("drop table if exists students;");
 			stmt.addBatch("drop table if exists departments;");
 			
-			stmt.executeBatch();
+			System.out.println("Dropping tables");
+			TestingHelper.checkExecuteBatch(stmt.executeBatch());
+			
 			stmt.clearBatch();
-			System.out.println("Dropped tables");
 		} catch (SQLException e) {
 			System.err.println("Error clearing tables");
 			e.printStackTrace();
@@ -134,6 +135,18 @@ public class CreateTables {
 						foreign key (name, level) references degrees(dgname, level)\r\n
 					);
 					""";
+			
+			String create_major =
+					"""
+					create table major (\r\n
+						sid integer not null,\r\n
+						name varchar(50) not null,\r\n
+						level varchar(5) not null,\r\n
+						primary key (sid, name, level),\r\n
+						foreign key (sid) references students(sid),\r\n
+						foreign key (name, level) references degrees(dgname, level)\r\n
+					);
+					""";
     			
 			// To update data in a database, call the executeUpdate(String SQL) method
 //			stmt.executeUpdate(create_department);	
@@ -146,11 +159,11 @@ public class CreateTables {
 			stmt.addBatch(create_offers);
 			stmt.addBatch(create_administer);
 			stmt.addBatch(create_minor);
+			stmt.addBatch(create_major);
 			
-			stmt.executeBatch();
-			stmt.clearBatch();
-			
-			System.out.println("Created tables");  
+			System.out.println("Creating tables");  
+			TestingHelper.checkExecuteBatch(stmt.executeBatch());
+			stmt.clearBatch();		
 			
 		} catch (SQLException e) {
 			System.err.println("Error creating tables");
