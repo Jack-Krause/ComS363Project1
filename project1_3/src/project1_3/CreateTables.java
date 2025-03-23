@@ -23,18 +23,18 @@ public class CreateTables {
 		try {
 			stmt = connect.createStatement();
 			
-			String drop_tables = "drop table if exists register;\r\n" + 
-					"drop table if exists offers;\r\n" + 
-					"drop table if exists administer;\r\n" + 
-					"drop table if exists minor;\r\n" + 
-					"drop table if exists major;\r\n" + 
-					"drop table if exists courses;\r\n" + 
-					"drop table if exists degrees;\r\n" + 
-					"drop table if exists students;\r\n" + 
-					"drop table if exists departments;\r\n";
+			stmt.addBatch("drop table if exists register;");
+			stmt.addBatch("drop table if exists offers;");
+			stmt.addBatch("drop table if exists administer;");
+			stmt.addBatch("drop table if exists minor;");
+			stmt.addBatch("drop table if exists major;");
+			stmt.addBatch("drop table if exists courses;");
+			stmt.addBatch("drop table if exists degrees;");
+			stmt.addBatch("drop table if exists students;");
+			stmt.addBatch("drop table if exists departments;");
 			
-			stmt.executeUpdate(drop_tables);
-			
+			stmt.executeBatch();
+			System.out.println("dropped tables");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
