@@ -17,11 +17,28 @@ public class CreateTables {
 
 		}
 		
-		
+	
 		//initiate sql statement
 		Statement stmt = null;
 		try {
 			stmt = connect.createStatement();
+			
+			String drop_tables = "drop table if exists register;\r\n" + 
+					"drop table if exists offers;\r\n" + 
+					"drop table if exists administer;\r\n" + 
+					"drop table if exists minor;\r\n" + 
+					"drop table if exists major;\r\n" + 
+					"drop table if exists courses;\r\n" + 
+					"drop table if exists degrees;\r\n" + 
+					"drop table if exists students;\r\n" + 
+					"drop table if exists departments;\r\n";
+			
+			stmt.executeUpdate(drop_tables);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			
 			String create_department = "CREATE TABLE departments (\r\n" + 
 					"	dname varchar(50) not null,\r\n" + 
