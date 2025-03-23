@@ -34,6 +34,7 @@ public class CreateTables {
 			stmt.addBatch("drop table if exists departments;");
 			
 			stmt.executeBatch();
+			stmt.clearBatch();
 			System.out.println("dropped tables");
 		} catch (SQLException e) {
 			e.printStackTrace();
