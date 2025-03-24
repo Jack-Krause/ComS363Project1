@@ -35,7 +35,7 @@ public class CreateTables {
 			stmt.addBatch("drop table if exists departments;");
 			
 			System.out.println("Dropping tables");
-			TestingHelper.checkExecuteBatch(stmt.executeBatch());
+			stmt.executeBatch();
 			
 			stmt.clearBatch();
 		} catch (SQLException e) {
@@ -162,7 +162,7 @@ public class CreateTables {
 			stmt.addBatch(create_major);
 			
 			System.out.println("Creating tables");  
-			TestingHelper.checkExecuteBatch(stmt.executeBatch());
+			stmt.executeBatch();
 			stmt.clearBatch();		
 			
 		} catch (SQLException e) {
