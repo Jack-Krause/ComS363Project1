@@ -51,11 +51,70 @@ public class InsertRecords {
 					(dcode, dname, phone, college);
 					""";
 			
+			String insert_courses = 
+					"""
+					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//courses.csv'\r\n
+					into table courses\r\n
+					fields terminated by ','\r\n
+					enclosed by '"'\r\n
+					lines terminated by '\r\n'\r\n
+					ignore 1 rows\r\n
+					(cnumber, cname, description, credithours, level, department_code);
+					""";
 			
+			String insert_degrees = 
+					"""
+					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//degrees.csv'\r\n
+					into table degrees\r\n
+					fields terminated by ','\r\n
+					enclosed by '"'\r\n
+					lines terminated by '\r\n'\r\n
+					ignore 1 rows\r\n
+					(dgname, level, department_code);
+					""";
+			
+			String insert_majors = 
+					"""
+					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//major.csv'\r\n
+					into table major\r\n
+					fields terminated by ','\r\n
+					enclosed by '"'\r\n
+					lines terminated by '\r\n'\r\n
+					ignore 1 rows\r\n
+					(sid, name, level);
+					""";
+			
+			String insert_minors =
+					"""
+					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//minor.csv'\r\n
+					into table minor\r\n
+					fields terminated by ','\r\n
+					enclosed by '"'\r\n
+					lines terminated by '\r\n'\r\n
+					ignore 1 rows\r\n
+					(sid, name, level);
+					""";
+			
+			String insert_registers =
+					"""
+					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//register.csv'\r\n
+					into table register\r\n
+					fields terminated by ','\r\n
+					enclosed by '"'\r\n
+					lines terminated by '\r\n'\r\n
+					ignore 1 rows\r\n
+					(sid, course_number, regtime, grade);
+					""";
+		
 			
 			stmt.addBatch(set_local_infile);
 			stmt.addBatch(insert_students);
 			stmt.addBatch(insert_departments);
+			stmt.addBatch(insert_courses);
+			stmt.addBatch(insert_degrees);
+			stmt.addBatch(insert_majors);
+			stmt.addBatch(insert_minors);
+			stmt.addBatch(insert_registers);
 			
 			System.out.println("inserting into tables");
 			int[] res = stmt.executeBatch();
