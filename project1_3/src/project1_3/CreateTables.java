@@ -34,12 +34,12 @@ public class CreateTables {
 			stmt.addBatch("drop table if exists students;");
 			stmt.addBatch("drop table if exists departments;");
 			
-			System.out.println("Dropping tables");
+			System.out.println("dropping tables");
 			stmt.executeBatch();
 			
 			stmt.clearBatch();
 		} catch (SQLException e) {
-			System.err.println("Error clearing tables");
+			System.err.println("error clearing tables");
 			e.printStackTrace();
 		}
 		try {
@@ -161,12 +161,12 @@ public class CreateTables {
 			stmt.addBatch(create_minor);
 			stmt.addBatch(create_major);
 			
-			System.out.println("Creating tables");  
+			System.out.println("creating tables");  
 			stmt.executeBatch();
 			stmt.clearBatch();		
 			
 		} catch (SQLException e) {
-			System.err.println("Error creating tables");
+			System.err.println("error creating tables");
 			e.printStackTrace();
 		}
 		
