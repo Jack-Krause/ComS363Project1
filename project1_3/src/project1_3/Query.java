@@ -32,6 +32,7 @@ public class Query {
 				
 				query_one(stmt);
 				query_two(stmt);
+				query_three(stmt);
 				
 				
 			} catch (SQLException e) {
@@ -116,5 +117,37 @@ public class Query {
 				
 			}
 		}
+		
+		
+		private static void query_three(Statement st) throws SQLException {
+			if (st != null) {
+				
+				String query_3 =
+						"""
+						with deg_stu as (
+							select name as degname, level, sid
+							from major
+							union
+							select name as degname, level, sid
+							from minor
+						)
+						select ds.degname, ds.level
+						from deg_stu ds
+						join students s
+						on ds.sid = s.sid
+						group by ds.degname, ds.level
+						having sum(case when s.gender = 'M' then 1 else 0 end) >
+							   sum(case when s.gender = 'F' then 1 else 0 end);
+						
+						""";
+				
+				ResultSet rs = st.executeQuery(query_3);
+				while (rs.next()) {
+					System.out.println("name: " + rs.getString("degname") + ", level: " + rs.getString("level"));
+					
+				}
+				
+			}
+		}
 
-}
+} // class
