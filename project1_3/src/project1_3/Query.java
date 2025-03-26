@@ -143,9 +143,40 @@ public class Query {
 				ResultSet rs = st.executeQuery(query3);
 				while (rs.next()) {
 					System.out.println(rs.getString("degname") + ", " + rs.getString("level"));
-					
 				}
 				
+			}
+		}
+		
+		
+		
+		protected static void queryThreeIndexed(Statement st) throws SQLException {
+			if (st != null) {
+				String createIndexGender = 
+						"""
+						create index idx_gender on students (gender);
+						""";
+				
+				String dropIndexGender = 
+						"""
+						drop index idx_gender on students;
+						""";
+				
+				Boolean resp = st.execute(createIndexGender);
+				System.out.println("creating index");
+			}
+		}
+		
+		protected static void queryThreeRemoveIndex(Statement st) throws SQLException {
+			if (st != null) {
+				
+				String dropIndexGender = 
+						"""
+						drop index idx_gender on students;
+						""";
+				
+				Boolean resp = st.execute(dropIndexGender);
+				System.out.println("dropping index");
 			}
 		}
 

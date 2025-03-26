@@ -1,5 +1,6 @@
 package project1_3;
 import java.sql.*;
+import java.util.concurrent.TimeUnit;
 
 
 public class Index {
@@ -26,7 +27,7 @@ public class Index {
 		try {
 			stmt = connect.createStatement();
 			
-			long t = timeQuery(stmt);
+			timeQuery(stmt);
 			
 		} catch (SQLException e) {
 			System.err.println("error in queries");
@@ -49,19 +50,51 @@ public class Index {
 	}
 	
 	
-	private static long timeQuery(Statement st) throws SQLException {
+	private static void timeQuery(Statement st) throws SQLException {
 		
 		if (st != null) {
-			long startTime = System.nanoTime();
-		
+			// measure time without index
+			long startTimeNoIdx = System.nanoTime();
 			Query.queryThree(st);
-		
-			return (long) 0.00;
+			long endTimeNoIdx = System.nanoTime();
+			long executionTimeNoIdx = endTimeNoIdx - startTimeNoIdx;
+			long executionSecondsNoIdx = TimeUnit.MICROSECONDS.convert(executionTimeNoIdx, TimeUnit.NANOSECONDS);
+
 			
+			// create index, run query and measure time again
+			Query.queryThreeIndexed(st);
+			long startTimeIdx = System.nanoTime();
+			Query.queryThree(st);
+			long endTimeIdx = System.nanoTime();
+			long executionTimeIdx = endTimeIdx - startTimeIdx;
+			long executionSecondsIdx = TimeUnit.MICROSECONDS.convert(executionTimeIdx, TimeUnit.NANOSECONDS);
+			
+			System.out.println(
+					"Execution time (no indexing): " + 
+					"(microseconds: " + 
+					executionSecondsNoIdx + 
+					"), (nanoseconds: " + 
+					executionTimeNoIdx +
+					")"
+					);
+			
+			System.out.println(
+					"Execution time (with indexing): " + 
+					"(microseconds: " + 
+					executionSecondsIdx + 
+					"), (nanoseconds: " + 
+					executionTimeIdx +
+					")"
+					);
+			
+			System.out.println("indexing is approx. " + (Math.round(executionTimeNoIdx / executionTimeIdx)) + "x faster");
+		
+			Query.queryThreeRemoveIndex(st);
+			
+		} else {
+			System.out.println("error: statement is null");
 		}
 		
-		System.out.println("error: statement is null");
-		return (long) 0.00;
 	}
 	
 	
