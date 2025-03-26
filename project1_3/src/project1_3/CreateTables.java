@@ -44,7 +44,7 @@ public class CreateTables {
 		}
 		try {
 			
-			String create_department = "CREATE TABLE departments (\r\n" + 
+			String createDepartment = "CREATE TABLE departments (\r\n" + 
 					"	dname varchar(50) not null,\r\n" + 
 					"	dcode integer not null,\r\n" + 
 					"   phone varchar(10),\r\n" + 
@@ -53,7 +53,7 @@ public class CreateTables {
 					"   unique (dname)\r\n" + 
 					");";
 			
-			String create_student = "CREATE TABLE students (\r\n" + 
+			String createStudent = "CREATE TABLE students (\r\n" + 
 					"	p_phone varchar(20),\r\n" + 
 					"   p_addr varchar(20),\r\n" + 
 					"	c_phone varchar(20),\r\n" + 
@@ -67,7 +67,7 @@ public class CreateTables {
 					"	unique (sid)\r\n" + 
 					");";
 			
-			String create_courses = "CREATE TABLE courses (\r\n" +
+			String createCourses = "CREATE TABLE courses (\r\n" +
 					"	cname varchar(50),\n\n" +
     				"	cnumber integer not null,\r\n" +
     				"	description varchar(50),\r\n" +
@@ -78,7 +78,7 @@ public class CreateTables {
     				"	foreign key (department_code) references departments(dcode)\r\n" +
     				");";
 			
-			String create_degrees = 
+			String createDegrees = 
 					"""
 					create table degrees (\r\n
 						    dgname varchar(50) not null,\r\n
@@ -89,7 +89,7 @@ public class CreateTables {
 						);
 					""";
 			
-			String create_register = 
+			String createRegister = 
 					"""
 					create table register (\r\n
 						sid integer not null,\r\n
@@ -103,7 +103,7 @@ public class CreateTables {
 					""";
 			
 			
-			String create_offers = 
+			String createOffers = 
 					"""
 					create table offers (
 						cnumber integer not null,\r\n
@@ -114,7 +114,7 @@ public class CreateTables {
 					);
 					""";
 			
-			String create_administer = 
+			String createAdminister = 
 					"""
 					create table administer (\r\n
 						dcode integer not null,\r\n
@@ -124,7 +124,7 @@ public class CreateTables {
 					);
 					""";
 			
-			String create_minor = 
+			String createMinor = 
 					"""
 					create table minor (\r\n
 						sid integer not null,\r\n
@@ -136,7 +136,7 @@ public class CreateTables {
 					);
 					""";
 			
-			String create_major =
+			String createMajor =
 					"""
 					create table major (\r\n
 						sid integer not null,\r\n
@@ -151,15 +151,15 @@ public class CreateTables {
 			// To update data in a database, call the executeUpdate(String SQL) method
 //			stmt.executeUpdate(create_department);	
 				
-			stmt.addBatch(create_student);
-			stmt.addBatch(create_department);
-			stmt.addBatch(create_courses);
-			stmt.addBatch(create_degrees);
-			stmt.addBatch(create_register);
-			stmt.addBatch(create_offers);
-			stmt.addBatch(create_administer);
-			stmt.addBatch(create_minor);
-			stmt.addBatch(create_major);
+			stmt.addBatch(createStudent);
+			stmt.addBatch(createDepartment);
+			stmt.addBatch(createCourses);
+			stmt.addBatch(createDegrees);
+			stmt.addBatch(createRegister);
+			stmt.addBatch(createOffers);
+			stmt.addBatch(createAdminister);
+			stmt.addBatch(createMinor);
+			stmt.addBatch(createMajor);
 			
 			System.out.println("creating tables");  
 			stmt.executeBatch();

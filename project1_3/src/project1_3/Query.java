@@ -30,9 +30,9 @@ public class Query {
 			try {
 				stmt = connect.createStatement();
 				
-				query_one(stmt);
-				query_two(stmt);
-				query_three(stmt);
+				queryOne(stmt);
+				queryTwo(stmt);
+				queryThree(stmt);
 				
 				
 			} catch (SQLException e) {
@@ -55,10 +55,10 @@ public class Query {
 			}
 		}
 		
-		protected static void query_one(Statement st) throws SQLException {
+		protected static void queryOne(Statement st) throws SQLException {
 			if (st != null) {
 				
-				String query_1 = 
+				String query1 = 
 						"""
 						select cnumber, cname, AVG(r.grade) as avg_grade\r\n
 						from courses as c\r\n
@@ -66,22 +66,22 @@ public class Query {
 						group by c.cnumber, c.cname;
 						""";
 				
-				ResultSet rs = st.executeQuery(query_1);
+				ResultSet rs = st.executeQuery(query1);
 				while (rs.next()) {
-					int cnumber = rs.getInt("cnumber");
-					String cname = rs.getString("cname");
-					float avg_grade = rs.getFloat("avg_grade");
+					int cNumber = rs.getInt("cnumber");
+					String cName = rs.getString("cname");
+					float avgGrade = rs.getFloat("avg_grade");
 					
-					System.out.println(cnumber + ", " + cname + ", " + avg_grade);
+					System.out.println(cNumber + ", " + cName + ", " + avgGrade);
 				}
 				
 			}
 		}
 		
-		protected static void query_two(Statement st) throws SQLException {
+		protected static void queryTwo(Statement st) throws SQLException {
 			if (st != null) {
 				
-				String query_2 = 
+				String query2 = 
 						"""
 						select count(distinct(s.sid)) as female_count\r\n
 						from (\r\n
@@ -109,7 +109,7 @@ public class Query {
 						where s.gender = 'F';
 						""";
 				
-				ResultSet rs = st.executeQuery(query_2);
+				ResultSet rs = st.executeQuery(query2);
 				while (rs.next()) {
 					System.out.println(rs.getInt("female_count"));
 					
@@ -119,29 +119,28 @@ public class Query {
 		}
 		
 		
-		protected static void query_three(Statement st) throws SQLException {
+		protected static void queryThree(Statement st) throws SQLException {
 			if (st != null) {
 				
-				String query_3 =
+				String query3 =
 						"""
-						with deg_stu as (
-							select name as degname, level, sid
-							from major
-							union
-							select name as degname, level, sid
-							from minor
-						)
-						select ds.degname, ds.level
-						from deg_stu ds
-						join students s
-						on ds.sid = s.sid
-						group by ds.degname, ds.level
-						having sum(case when s.gender = 'M' then 1 else 0 end) >
+						with deg_stu as (\r\n
+							select name as degname, level, sid\r\n
+							from major\r\n
+							union\r\n
+							select name as degname, level, sid\r\n
+							from minor\r\n
+						)\r\n
+						select ds.degname, ds.level\r\n
+						from deg_stu ds\r\n
+						join students s\r\n
+						on ds.sid = s.sid\r\n
+						group by ds.degname, ds.level\r\n
+						having sum(case when s.gender = 'M' then 1 else 0 end) >\r\n
 							   sum(case when s.gender = 'F' then 1 else 0 end);
-						
 						""";
 				
-				ResultSet rs = st.executeQuery(query_3);
+				ResultSet rs = st.executeQuery(query3);
 				while (rs.next()) {
 					System.out.println(rs.getString("degname") + ", " + rs.getString("level"));
 					

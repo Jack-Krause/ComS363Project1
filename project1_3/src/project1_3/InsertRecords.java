@@ -24,12 +24,12 @@ public class InsertRecords {
 		try {
 			stmt = connect.createStatement();
 			
-			String set_local_infile = 
+			String setLocalInfile = 
 					"""
 					SET GLOBAL local_infile=1;
 					""";
 			
-			String insert_students = 
+			String insertStudents = 
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//students.csv'\r\n
 					into table students\r\n
@@ -40,7 +40,7 @@ public class InsertRecords {
 					(sid, ssn, name, gender, dob, c_addr, c_phone, p_addr, p_phone);
 					""";
 			
-			String insert_departments = 
+			String insertDepartments = 
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//departments.csv'\r\n
 					into table departments\r\n
@@ -51,7 +51,7 @@ public class InsertRecords {
 					(dcode, dname, phone, college);
 					""";
 			
-			String insert_courses = 
+			String insertCourses = 
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//courses.csv'\r\n
 					into table courses\r\n
@@ -62,7 +62,7 @@ public class InsertRecords {
 					(cnumber, cname, description, credithours, level, department_code);
 					""";
 			
-			String insert_degrees = 
+			String insertDegrees = 
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//degrees.csv'\r\n
 					into table degrees\r\n
@@ -73,7 +73,7 @@ public class InsertRecords {
 					(dgname, level, department_code);
 					""";
 			
-			String insert_majors = 
+			String insertMajors = 
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//major.csv'\r\n
 					into table major\r\n
@@ -84,7 +84,7 @@ public class InsertRecords {
 					(sid, name, level);
 					""";
 			
-			String insert_minors =
+			String insertMinors =
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//minor.csv'\r\n
 					into table minor\r\n
@@ -95,7 +95,7 @@ public class InsertRecords {
 					(sid, name, level);
 					""";
 			
-			String insert_registers =
+			String insertRegisters =
 					"""
 					load data local infile 'C://Users//jackm//OneDrive//CS3630//Project1//register.csv'\r\n
 					into table register\r\n
@@ -107,14 +107,14 @@ public class InsertRecords {
 					""";
 		
 			
-			stmt.addBatch(set_local_infile);
-			stmt.addBatch(insert_students);
-			stmt.addBatch(insert_departments);
-			stmt.addBatch(insert_courses);
-			stmt.addBatch(insert_degrees);
-			stmt.addBatch(insert_majors);
-			stmt.addBatch(insert_minors);
-			stmt.addBatch(insert_registers);
+			stmt.addBatch(setLocalInfile);
+			stmt.addBatch(insertStudents);
+			stmt.addBatch(insertDepartments);
+			stmt.addBatch(insertCourses);
+			stmt.addBatch(insertDegrees);
+			stmt.addBatch(insertMajors);
+			stmt.addBatch(insertMinors);
+			stmt.addBatch(insertRegisters);
 			
 			System.out.println("inserting into tables");
 			int[] res = stmt.executeBatch();
