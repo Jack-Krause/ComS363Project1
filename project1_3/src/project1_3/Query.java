@@ -55,7 +55,7 @@ public class Query {
 			}
 		}
 		
-		private static void query_one(Statement st) throws SQLException {
+		protected static void query_one(Statement st) throws SQLException {
 			if (st != null) {
 				
 				String query_1 = 
@@ -78,7 +78,7 @@ public class Query {
 			}
 		}
 		
-		private static void query_two(Statement st) throws SQLException {
+		protected static void query_two(Statement st) throws SQLException {
 			if (st != null) {
 				
 				String query_2 = 
@@ -111,7 +111,7 @@ public class Query {
 				
 				ResultSet rs = st.executeQuery(query_2);
 				while (rs.next()) {
-					System.out.println("female count: " + rs.getInt("female_count"));
+					System.out.println(rs.getInt("female_count"));
 					
 				}
 				
@@ -119,7 +119,7 @@ public class Query {
 		}
 		
 		
-		private static void query_three(Statement st) throws SQLException {
+		protected static void query_three(Statement st) throws SQLException {
 			if (st != null) {
 				
 				String query_3 =
@@ -143,7 +143,7 @@ public class Query {
 				
 				ResultSet rs = st.executeQuery(query_3);
 				while (rs.next()) {
-					System.out.println("name: " + rs.getString("degname") + ", level: " + rs.getString("level"));
+					System.out.println(rs.getString("degname") + ", " + rs.getString("level"));
 					
 				}
 				
