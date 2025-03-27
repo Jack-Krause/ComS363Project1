@@ -3,6 +3,7 @@ package project1_3;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -29,8 +30,10 @@ public class ModifyRecords {
 			Statement stmt = null;
 			try {
 				stmt = connect.createStatement();
+				testModify(stmt);
 				
 				modifyRecords(stmt);
+				testModify(stmt);
 				
 			} catch (SQLException e) {
 				System.err.println("error in updates");
@@ -77,27 +80,49 @@ public class ModifyRecords {
 				
 				String modifyFour =
 						"""
-						delete c\r\n
-						from courses c\r\n
-						join
-						(
-							select
-							from
-							where
-							
-							union
-							
-							select
-							from
-							where
-						)
-						
+						delete from register\r\n
+						where course_number IN (\r\n
+						select cnum from (\r\n
+							select c.cnumber as cnum\r\n
+							from courses c\r\n
+							join (\r\n
+								select level, department_code, min(cnumber) as min_c\r\n
+								from courses\r\n
+								group by level, department_code\r\n
+							) as keep\r\n
+						 	on c.level = keep.level\r\n
+							and c.department_code = keep.department_code\r\n
+							where c.cnumber <> keep.min_c\r\n
+							) as t\r\n
+						);
+						""";
+				String dd = 
+						"""
+						delete from courses\r\n
+						where cnumber in (\r\n
+							select cnum from (\r\n
+								select c.cnumber as cnum\r\n
+								from courses c\r\n
+								join (\r\n
+									select level, department_code, min(cnumber) as min_c\r\n
+									from courses\r\n
+									group by level, department_code\r\n
+								) as keep\r\n
+								on c.level = keep.level\r\n
+								and c.department_code = keep.department_code\r\n
+								where c.cnumber <> keep.min_c\r\n
+							) as t\r\n
+						);
+
 						""";
 				
 				
 				st.addBatch(modifyOne);
 				st.addBatch(modifyTwo);
 				st.addBatch(modifyThree);
+				st.addBatch(modifyFour);
+				st.addBatch(dd);
+				
 				int[] res = st.executeBatch();
 				st.clearBatch();
 				
@@ -107,5 +132,46 @@ public class ModifyRecords {
 				System.out.println();
 			}
 		}
+		
+		
+		private static void testModify(Statement st) throws SQLException {
+			if (st != null) {
+				String selectFour =
+						"""
+						select c.*, r.*\r\n
+						from courses c\r\n
+						left join register r on r.course_number = c.cnumber
+						join\r\n
+						(\r\n
+							select level, department_code, min(cnumber) as min_c\r\n
+							from courses\r\n
+							group by level, department_code\r\n
+						) as keep\r\n
+						on c.level = keep.level\r\n
+						and c.department_code = keep.department_code\r\n
+						where c.cnumber <> keep.min_c;
+						""";
+				
+				ResultSet rs = st.executeQuery(selectFour);
+				ResultSetMetaData rsmd = rs.getMetaData();
+				int columnsNumber = rsmd.getColumnCount();
+				
+				while (rs.next()) {
+				    for (int i = 1; i <= columnsNumber; i++) {
+				        if (i > 1) System.out.print(", ");
+				        String columnValue = rs.getString(i);
+				        System.out.println(columnValue);
+				        System.out.print(rsmd.getColumnName(i) + ": " + columnValue);
+				    }
+				    System.out.println();
+				    System.out.println();
+				}
+				
+				
+			}
+			
+			
+		}
+		
 				
 } // class
